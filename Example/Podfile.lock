@@ -1,0 +1,45 @@
+PODS:
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
+  - EYNetwork (0.1.5):
+    - AFNetworking
+    - ReactiveObjC
+  - EYNetworkClient (0.1.0):
+    - EYNetwork
+  - ReactiveObjC (3.1.0)
+
+DEPENDENCIES:
+  - EYNetworkClient (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - EYNetwork
+    - ReactiveObjC
+
+EXTERNAL SOURCES:
+  EYNetworkClient:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  EYNetwork: dd46b95bb663321c8dc3d069f61a16cc0abb8c74
+  EYNetworkClient: 8afd387d18678881d33ef9ec916f7ebd07e38a6f
+  ReactiveObjC: 2a38ea15335de4119d8b17caf1db1484f61db902
+
+PODFILE CHECKSUM: 062d59395274596df301bcb53607b6f3f0d36e8d
+
+COCOAPODS: 1.6.0.beta.1

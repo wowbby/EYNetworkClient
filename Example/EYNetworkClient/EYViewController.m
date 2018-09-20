@@ -7,7 +7,8 @@
 //
 
 #import "EYViewController.h"
-
+#import "EYRequest.h"
+#import "RACSignal+RACSupport.h"
 @interface EYViewController ()
 
 @end
@@ -18,6 +19,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+//    http://api01.bitspaceman.com:8000/news/qihoo?apikey=6Vw54sUQ1woFrPFsUeRtjPk6CSWIJRBnQKJV6DJ1BjD5Xo4zDyLpE38w7R8nkjUs
+    
+    [[[EYRequest new] start] subscribeNext:^(id  _Nullable x) {
+        
+    } progress:^(NSProgress *progress) {
+        
+    } error:^(NSError * _Nullable error) {
+        
+    } completed:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning

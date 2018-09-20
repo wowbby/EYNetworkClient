@@ -37,7 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18370D49DCA2FE1AC3A33BF7 /* EYNetworkClient.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = EYNetworkClient.podspec; path = ../EYNetworkClient.podspec; sourceTree = "<group>"; };
+		18370D49DCA2FE1AC3A33BF7 /* EYNetworkClient.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = EYNetworkClient.podspec; path = ../EYNetworkClient.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2180A0BD0C690868E4B84ED3 /* Pods_EYNetworkClient_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EYNetworkClient_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E8EA2D178496F3E1AF440FC /* Pods-EYNetworkClient_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EYNetworkClient_Example.debug.xcconfig"; path = "Target Support Files/Pods-EYNetworkClient_Example/Pods-EYNetworkClient_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* EYNetworkClient_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EYNetworkClient_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,9 +64,9 @@
 		725C206BF679DE14A10C3E43 /* Pods-EYNetworkClient_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EYNetworkClient_Tests.release.xcconfig"; path = "Target Support Files/Pods-EYNetworkClient_Tests/Pods-EYNetworkClient_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		94339C90CDDC4EA832ABE6E6 /* Pods_EYNetworkClient_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EYNetworkClient_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C383F6597EE45029DA67967C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		C383F6597EE45029DA67967C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D164586FCC70C6496E6DF775 /* Pods-EYNetworkClient_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EYNetworkClient_Example.release.xcconfig"; path = "Target Support Files/Pods-EYNetworkClient_Example/Pods-EYNetworkClient_Example.release.xcconfig"; sourceTree = "<group>"; };
-		F872288B646B1443C4288551 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		F872288B646B1443C4288551 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +193,6 @@
 				630E71D4C078B62608F207FD /* Pods-EYNetworkClient_Tests.debug.xcconfig */,
 				725C206BF679DE14A10C3E43 /* Pods-EYNetworkClient_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -300,15 +299,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-EYNetworkClient_Example-checkManifestLockResult.txt",
 			);
@@ -322,17 +317,19 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-EYNetworkClient_Example/Pods-EYNetworkClient_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/EYNetwork/EYNetwork.framework",
 				"${BUILT_PRODUCTS_DIR}/EYNetworkClient/EYNetworkClient.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EYNetwork.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EYNetworkClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -344,15 +341,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-EYNetworkClient_Tests-checkManifestLockResult.txt",
 			);

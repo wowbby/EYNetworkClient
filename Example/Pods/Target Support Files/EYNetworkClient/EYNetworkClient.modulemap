@@ -1,0 +1,6 @@
+framework module EYNetworkClient {
+  umbrella header "EYNetworkClient-umbrella.h"
+
+  export *
+  module * { export * }
+}
