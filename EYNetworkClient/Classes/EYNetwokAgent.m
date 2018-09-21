@@ -8,25 +8,22 @@
 #import "EYNetwokAgent.h"
 #import "EYNetwork.h"
 #import "RACSignal+RACSupport.h"
-@interface EYNetwokAgent()
-@property (nonatomic, strong)AFHTTPSessionManager * manager;
+@interface EYNetwokAgent ()
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
 @end
 
 @implementation EYNetwokAgent
-+(instancetype)shareAgent{
-    static EYNetwokAgent * agent;
++ (instancetype)shareAgent
+{
+    static EYNetwokAgent *agent;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        agent = [[[self class] alloc] init] ;
+      agent = [[[self class] alloc] init];
     });
     return agent;
 }
--(instancetype)init{
-    if (self = [super init]) {
-    }
-    return self;
-}
--(AFHTTPSessionManager *)manager{
+- (AFHTTPSessionManager *)manager
+{
     if (!_manager) {
         _manager = ({
             [AFHTTPSessionManager manager];
@@ -35,55 +32,26 @@
     return _manager;
 }
 #pragma mark public method
--(RACSignal *)addRequest:(EYRequest *)request{
+- (RACSignal *)addRequest:(EYRequest *)request
+{
     self.manager.requestSerializer = [self createRequestSerializationWith:request];
     self.manager.responseSerializer = [self createResponseSerializationWith:request];
-    NSString * URLString = [self createURLStringWithRequest:request];
+    NSString *URLString = [self createURLStringWithRequest:request];
     if (request.constructingBodyBlock) {
-        
-        return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-           
-            [[self postWithConstructingBodyBlock:request.constructingBodyBlock URLString:URLString parameters:request.requestArgument] subscribeNext:^(id  _Nullable x) {
-                
-                if ([x isKindOfClass:RACTuple.class]) {
-                    
-                }
-                
-            } progress:^(NSProgress * progress) {
-                
-            } error:^(NSError * _Nullable error) {
-                
-            } completed:^{
-                
-            }];
-            
-            return [RACDisposable disposableWithBlock:^{
-            }];
-        }];
-    }else{
-        
-        return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-            [[self method:request.method URLString:URLString parameters:request.requestArgument] subscribeNext:^(id  _Nullable x) {
-                
-            } progress:^(NSProgress * progress) {
-                
-            } error:^(NSError * _Nullable error) {
-                
-            } completed:^{
-                
-            }];
-            
-            return [RACDisposable disposableWithBlock:^{
-                
-            }];
-        }];
+
+        return [self postWithConstructingBodyBlock:request.constructingBodyBlock URLString:URLString parameters:request.requestArgument];
+    }
+    else {
+
+        return [self method:request.method URLString:URLString parameters:request.requestArgument];
     }
 }
--(RACSignal *)method:(EYRequestMethod)method URLString:(NSString *)urlString parameters:(id)parameters{
-    
+- (RACSignal *)method:(EYRequestMethod)method URLString:(NSString *)urlString parameters:(id)parameters
+{
+
     switch (method) {
         case EYRequestMethodGET:
-           return [self.manager GET:urlString parameters:parameters];
+            return [self.manager GET:urlString parameters:parameters];
             break;
         case EYRequestMethodPOST:
             return [self.manager POST:urlString parameters:parameters];
@@ -106,29 +74,32 @@
     }
     return nil;
 }
--(RACSignal *)postWithConstructingBodyBlock:(ConstructingBodyBlock)block URLString:(NSString *)urlstring parameters:(id)parameters{
-    
+- (RACSignal *)postWithConstructingBodyBlock:(ConstructingBodyBlock)block URLString:(NSString *)urlstring parameters:(id)parameters
+{
+
     return [self.manager POST:urlstring parameters:parameters constructingBodyWithBlock:block];
 }
 #pragma mark private method
--(id<AFURLRequestSerialization>)createRequestSerializationWith:(EYRequest *)request{
-    
+- (id<AFURLRequestSerialization>)createRequestSerializationWith:(EYRequest *)request
+{
+
     if (request.requestSerializerType == EYRequestSerializerTypeHTTP) {
-        AFHTTPRequestSerializer * httpRequestSerializer = [AFHTTPRequestSerializer serializer];
+        AFHTTPRequestSerializer *httpRequestSerializer = [AFHTTPRequestSerializer serializer];
         httpRequestSerializer.timeoutInterval = request.timeoutInterval;
-        [request.requestHeaders enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-            [httpRequestSerializer setValue:obj forHTTPHeaderField:key];
+        [request.requestHeaders enumerateKeysAndObjectsUsingBlock:^(NSString *_Nonnull key, NSString *_Nonnull obj, BOOL *_Nonnull stop) {
+          [httpRequestSerializer setValue:obj forHTTPHeaderField:key];
         }];
         if (request.authorization != nil) {
             [httpRequestSerializer setAuthorizationHeaderFieldWithUsername:request.authorization.firstObject
-                                                              password:request.authorization.lastObject];
+                                                                  password:request.authorization.lastObject];
         }
         return httpRequestSerializer;
-    }else{
-        AFJSONRequestSerializer * jsonRequestSerializer = [AFJSONRequestSerializer serializer];
+    }
+    else {
+        AFJSONRequestSerializer *jsonRequestSerializer = [AFJSONRequestSerializer serializer];
         jsonRequestSerializer.timeoutInterval = request.timeoutInterval;
-        [request.requestHeaders enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-            [jsonRequestSerializer setValue:obj forHTTPHeaderField:key];
+        [request.requestHeaders enumerateKeysAndObjectsUsingBlock:^(NSString *_Nonnull key, NSString *_Nonnull obj, BOOL *_Nonnull stop) {
+          [jsonRequestSerializer setValue:obj forHTTPHeaderField:key];
         }];
         if (request.authorization != nil) {
             [jsonRequestSerializer setAuthorizationHeaderFieldWithUsername:request.authorization.firstObject
@@ -137,8 +108,9 @@
         return jsonRequestSerializer;
     }
 }
--(id<AFURLResponseSerialization>)createResponseSerializationWith:(EYRequest *)request{
- 
+- (id<AFURLResponseSerialization>)createResponseSerializationWith:(EYRequest *)request
+{
+
     id<AFURLResponseSerialization> responseSerialization;
     switch (request.responseSerializerType) {
         case EYResponseSerializerTypeHTTP:
@@ -150,21 +122,21 @@
         case EYResponseSerializerTypeXML:
             responseSerialization = [AFXMLParserResponseSerializer serializer];
             break;
-            
+
         default:
             break;
     }
     return responseSerialization;
 }
--(NSString *)createURLStringWithRequest:(EYRequest *)request{
-    
-    NSURL * detailURL = [NSURL URLWithString:request.path];
-    
+- (NSString *)createURLStringWithRequest:(EYRequest *)request
+{
+
+    NSURL *detailURL = [NSURL URLWithString:request.path];
     if (detailURL && detailURL.scheme && detailURL.host) {
         return request.path;
     }
-    NSString * urlString = request.useCDN?request.baseURL:request.baseURL;
-    NSURL * baseURL = [NSURL URLWithString:urlString];
+    NSString *urlString = request.useCDN ? request.baseURL : request.baseURL;
+    NSURL *baseURL = [NSURL URLWithString:urlString];
     return [NSURL URLWithString:request.path relativeToURL:baseURL].absoluteString;
 }
 @end
