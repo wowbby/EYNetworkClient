@@ -9,6 +9,8 @@
 #import "EYNetwork.h"
 #import "EYRequest.h"
 @interface EYNetwokAgent : NSObject
-+(instancetype)shareAgent;
--(RACSignal *)addRequest:(EYRequest *)request;
++ (instancetype)shareAgent;
+- (RACSignal *)addRequest:(EYRequest *)request;
+- (void)setAFSecurityPolicy:(AFSecurityPolicy *)policy;
+- (void)setNSURLSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration;
 @end

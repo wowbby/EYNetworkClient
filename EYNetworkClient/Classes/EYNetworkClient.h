@@ -8,5 +8,7 @@
 #ifndef EYNetworkClient_h
 #define EYNetworkClient_h
 
+#import "EYRequest.h"
+#import "EYNetwokAgent.h"
 
 #endif /* EYNetworkClient_h */

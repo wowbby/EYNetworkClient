@@ -35,18 +35,22 @@
 }
 - (RACSignal *)start
 {
-
+    NSLog(@"%@", self.description);
     return [RACSignal createSignal:^RACDisposable *_Nullable(id<RACSubscriber> _Nonnull subscriber) {
-
-      return [[[EYNetwokAgent shareAgent] addRequest:self] subscribeNext:^(id _Nullable x) {
-
-        if ([x isKindOfClass:[RACTuple class]]) {
-            RACTupleUnpack(NSURLSessionDataTask * task, id responseObject) = x;
-            self.task = task;
-            self.responseObject = responseObject;
-        }
-        [subscriber sendNext:self];
+      return [[[EYNetwokAgent shareAgent] addRequest:self] subscribeStart:^(NSURLSessionTask *task) {
+        self.task = task;
+        [(EYRACSubscriber *)subscriber sendStart:task];
       }
+          Next:^(id _Nullable x) {
+
+            if ([x isKindOfClass:[RACTuple class]]) {
+                RACTupleUnpack(NSURLSessionDataTask * task, id responseObject) = x;
+                self.task = task;
+                self.responseObject = responseObject;
+            }
+            [subscriber sendNext:self];
+            [subscriber sendCompleted];
+          }
           progress:^(NSProgress *progress) {
             [(EYRACSubscriber *)subscriber sendProgress:progress];
           }
@@ -59,18 +63,46 @@
           }];
     }];
 }
-- (NSString *)baseURL
+- (void)cancle
+{
+    if (self.task && (self.task.state == NSURLSessionTaskStateRunning || self.task.state == NSURLSessionTaskStateSuspended)) {
+        [self.task cancel];
+    }
+}
+- (void)suspend
 {
 
-    return @"http://api01.bitspaceman.com:8000";
+    if (self.task && self.task.state == NSURLSessionTaskStateRunning) {
+        [self.task suspend];
+    }
+}
+- (void)resume
+{
+    if (self.task && self.task.state != NSURLSessionTaskStateRunning) {
+        [self.task resume];
+    }
+}
+- (NSTimeInterval)timeoutInterval
+{
+
+    return 15;
+}
+- (NSString *)baseURL
+{
+    return @"https://uhome.haier.net:7253";
 }
 - (NSString *)path
 {
-    return @"/news/qihoo";
+    return @"/acquisitionData/open/getCityWeatherList";
+}
+- (EYRequestMethod)method
+{
+
+    return EYRequestMethodPOST;
 }
 - (EYRequestSerializerType)requestSerializerType
 {
-    return EYRequestSerializerTypeHTTP;
+    return EYRequestSerializerTypeJSON;
 }
 - (EYResponseSerializerType)responseSerializerType
 {
@@ -79,7 +111,27 @@
 - (id)requestArgument
 {
 
-    return @{ @"apikey" : @"6Vw54sUQ1woFrPFsUeRtjPk6CSWIJRBnQKJV6DJ1BjD5Xo4zDyLpE38w7R8nkjUs",
-              @"kw" : @"腾讯" };
+    return @{
+        @"userId" : @"20567040",
+        @"cityId" : @"101010100",
+        @"language" : @"zh_cn"
+    };
+}
+- (NSDictionary<NSString *, NSString *> *)requestHeaders
+{
+
+    return @{ @"appKey" : @"25f61cd00659b6e91c9d28c080c78e9a",
+              @"appVersion" : @"2.27.0",
+              @"sequenceId" : @"20180417141300000001",
+              @"clientId" : @"356877020056553-08002700DC94",
+              @"appId" : @"MB-AIRCONDITION1-0000",
+              @"accessToken" : @"",
+              @"Content-Type" : @"application/json; charset=utf-8"
+    };
+}
+- (NSString *)description
+{
+
+    return [NSString stringWithFormat:@"EYRequest:\n name :{%@},\n baseURL:{%@},\n cdnURL:{%@},\n path:{%@},\n body:{%@},\n header:{%@},\n method:{%ld}", self.name, self.baseURL, self.cdnURL, self.path, self.requestArgument, self.requestHeaders, self.method];
 }
 @end

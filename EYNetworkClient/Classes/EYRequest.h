@@ -64,6 +64,13 @@ typedef void (^ConstructingBodyBlock)(id<AFMultipartFormData> formData);
 @property (assign, nonatomic) EYResponseSerializerType responseSerializerType;
 @property (strong, nonatomic) NSDictionary<NSString *, NSString *> *requestHeaders;
 @property (copy, nonatomic) ConstructingBodyBlock constructingBodyBlock;
+
+/**
+ @[@"username",@"password"]
+ */
 @property (strong, nonatomic) NSArray<NSString *> *authorization;
 - (RACSignal *)start;
+- (void)cancle;
+- (void)suspend;
+- (void)resume;
 @end

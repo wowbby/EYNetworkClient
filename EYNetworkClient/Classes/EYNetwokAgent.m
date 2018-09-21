@@ -10,6 +10,7 @@
 #import "RACSignal+RACSupport.h"
 @interface EYNetwokAgent ()
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
+@property (nonatomic, strong) AFSecurityPolicy *policy;
 @end
 
 @implementation EYNetwokAgent
@@ -22,6 +23,13 @@
     });
     return agent;
 }
+- (instancetype)init
+{
+    if (self = [super init]) {
+        self.manager.completionQueue = dispatch_queue_create("com.EY.EYNetwokAgent.AFHTTPSessionManager.completionQueue", DISPATCH_QUEUE_CONCURRENT);
+    }
+    return self;
+}
 - (AFHTTPSessionManager *)manager
 {
     if (!_manager) {
@@ -30,6 +38,18 @@
         });
     }
     return _manager;
+}
+- (void)setAFSecurityPolicy:(AFSecurityPolicy *)policy
+{
+    self.policy = policy;
+    _manager.securityPolicy = policy;
+}
+- (void)setNSURLSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration
+{
+    _manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:sessionConfiguration];
+    if (self.policy) {
+        _manager.securityPolicy = self.policy;
+    }
 }
 #pragma mark public method
 - (RACSignal *)addRequest:(EYRequest *)request
@@ -46,6 +66,7 @@
         return [self method:request.method URLString:URLString parameters:request.requestArgument];
     }
 }
+#pragma mark private method
 - (RACSignal *)method:(EYRequestMethod)method URLString:(NSString *)urlString parameters:(id)parameters
 {
 
@@ -76,10 +97,8 @@
 }
 - (RACSignal *)postWithConstructingBodyBlock:(ConstructingBodyBlock)block URLString:(NSString *)urlstring parameters:(id)parameters
 {
-
     return [self.manager POST:urlstring parameters:parameters constructingBodyWithBlock:block];
 }
-#pragma mark private method
 - (id<AFURLRequestSerialization>)createRequestSerializationWith:(EYRequest *)request
 {
 
