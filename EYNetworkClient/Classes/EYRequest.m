@@ -7,9 +7,9 @@
 
 #import "EYRequest.h"
 #import "EYNetwokAgent.h"
-#import "RACSignal+RACSupport.h"
-#import "EYNetwork.h"
-#import "EYRACSubscriber.h"
+#import <EYNetwork/RACSignal+RACSupport.h>
+#import <EYNetwork/EYNetwork.h>
+#import <EYNetwork/EYRACSubscriber.h>
 @interface EYRequest ()
 @property (nonatomic, strong, readwrite, nonnull) NSURLSessionTask *task;
 @property (nonatomic, strong, readwrite, nonnull) NSURLRequest *currentRequest;

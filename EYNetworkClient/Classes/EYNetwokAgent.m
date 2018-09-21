@@ -6,8 +6,7 @@
 //
 
 #import "EYNetwokAgent.h"
-#import "EYNetwork.h"
-#import "RACSignal+RACSupport.h"
+#import <EYNetwork/RACSignal+RACSupport.h>
 @interface EYNetwokAgent ()
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) AFSecurityPolicy *policy;

@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EYNetwork.h"
+#import <EYNetwork/EYNetwork.h>
 typedef NS_ENUM(NSInteger, EYRequestMethod) {
     EYRequestMethodGET,
     EYRequestMethodPOST,

@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EYNetwork.h"
+#import <EYNetwork/EYNetwork.h>
 #import "EYRequest.h"
 @interface EYNetwokAgent : NSObject
 + (instancetype)shareAgent;
