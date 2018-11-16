@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EYNetworkClient'
-  s.version          = '0.3.1'
-  s.summary          = 'A short description of EYNetworkClient.'
+  s.version          = '0.5.0'
+  s.summary          = '基于RAC的网络框架'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
