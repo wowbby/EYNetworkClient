@@ -17,21 +17,6 @@
 - (IBAction)btnAction:(id)sender
 {
 
-    [self.request suspend];
-}
-- (IBAction)re:(id)sender
-{
-    [self.request resume];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    //    http://api01.bitspaceman.com:8000/news/qihoo?apikey=6Vw54sUQ1woFrPFsUeRtjPk6CSWIJRBnQKJV6DJ1BjD5Xo4zDyLpE38w7R8nkjUs
-
-    self.request = [EYRequest new];
-
     [[self.request start] subscribeStart:^(NSURLSessionTask *task) {
       NSLog(@"start");
     }
@@ -47,6 +32,19 @@
         completed:^{
           NSLog(@"completed");
         }];
+}
+- (IBAction)re:(id)sender
+{
+    [self.request start];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+    //    http://api01.bitspaceman.com:8000/news/qihoo?apikey=6Vw54sUQ1woFrPFsUeRtjPk6CSWIJRBnQKJV6DJ1BjD5Xo4zDyLpE38w7R8nkjUs
+
+    self.request = [EYRequest new];
 }
 
 - (void)didReceiveMemoryWarning

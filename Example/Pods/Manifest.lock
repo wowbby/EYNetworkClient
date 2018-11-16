@@ -17,7 +17,7 @@ PODS:
   - EYNetwork (0.1.6):
     - AFNetworking
     - ReactiveObjC
-  - EYNetworkClient (0.1.0):
+  - EYNetworkClient (0.3.0):
     - EYNetwork
   - ReactiveObjC (3.1.0)
 
@@ -37,7 +37,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   EYNetwork: 61665cea93fff0c109786a8fb0bdba2c59cdbd77
-  EYNetworkClient: 8afd387d18678881d33ef9ec916f7ebd07e38a6f
+  EYNetworkClient: fab856e6bdc361eb710117c6ab8706eb6164c2af
   ReactiveObjC: 2a38ea15335de4119d8b17caf1db1484f61db902
 
 PODFILE CHECKSUM: 062d59395274596df301bcb53607b6f3f0d36e8d

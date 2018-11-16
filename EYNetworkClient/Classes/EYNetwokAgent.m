@@ -41,7 +41,7 @@
 - (void)setAFSecurityPolicy:(AFSecurityPolicy *)policy
 {
     self.policy = policy;
-    _manager.securityPolicy = policy;
+    self.manager.securityPolicy = policy;
 }
 - (void)setNSURLSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration
 {
@@ -153,7 +153,7 @@
     if (detailURL && detailURL.scheme && detailURL.host) {
         return request.path;
     }
-    NSString *urlString = request.useCDN ? request.baseURL : request.baseURL;
+    NSString *urlString = request.baseURL;
     NSURL *baseURL = [NSURL URLWithString:urlString];
     return [NSURL URLWithString:request.path relativeToURL:baseURL].absoluteString;
 }

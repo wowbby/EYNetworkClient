@@ -52,11 +52,8 @@ typedef void (^ConstructingBodyBlock)(id<AFMultipartFormData> formData);
  */
 @property (assign, nonatomic) NSInteger tag;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSDictionary *userInfo;
 @property (strong, nonatomic) NSString *baseURL;
-@property (strong, nonatomic) NSString *cdnURL;
 @property (strong, nonatomic) NSString *path;
-@property (assign, nonatomic) BOOL useCDN;
 @property (assign, nonatomic) NSTimeInterval timeoutInterval;
 @property (assign, nonatomic) EYRequestMethod method;
 @property (strong, nonatomic) id requestArgument;
@@ -64,6 +61,9 @@ typedef void (^ConstructingBodyBlock)(id<AFMultipartFormData> formData);
 @property (assign, nonatomic) EYResponseSerializerType responseSerializerType;
 @property (strong, nonatomic) NSDictionary<NSString *, NSString *> *requestHeaders;
 @property (copy, nonatomic) ConstructingBodyBlock constructingBodyBlock;
+@property (strong, nonatomic) NSString *cacheKey;
+@property (assign, nonatomic) BOOL ignoreCache;
+@property (assign, nonatomic) NSInteger cacheTimeInSeconds;
 
 /**
  @[@"username",@"password"]
