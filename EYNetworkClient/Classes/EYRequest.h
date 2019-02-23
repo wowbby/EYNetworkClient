@@ -32,7 +32,6 @@ typedef NS_ENUM(NSInteger, EYRequestPriority) {
 
 };
 
-@class EYRequest;
 @protocol EYRequestDelegate <NSObject>
 - (void)requestStart:(id)request;
 - (void)requestCancle:(id)request;

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EYNetworkClient'
-  s.version          = '0.6.2'
+  s.version          = '0.6.3'
   s.summary          = '基于RAC的网络框架'
 
 # This description is used to generate tags and improve search results.
