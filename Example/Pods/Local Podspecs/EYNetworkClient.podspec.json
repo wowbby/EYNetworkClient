@@ -1,6 +1,6 @@
 {
   "name": "EYNetworkClient",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "summary": "基于RAC的网络框架",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/wowbby/EYNetworkClient",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/wowbby/EYNetworkClient.git",
-    "tag": "0.5.0"
+    "tag": "0.6.0"
   },
   "platforms": {
     "ios": "8.0"
@@ -21,9 +21,6 @@
   "source_files": "EYNetworkClient/Classes/**/*",
   "dependencies": {
     "EYNetwork": [
-
-    ],
-    "UpLog": [
 
     ]
   }

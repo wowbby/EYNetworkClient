@@ -6,7 +6,6 @@
 //
 
 #import "EYRequest+Accessory.h"
-#import "UpLogManager.h"
 @protocol EYRequestDelegate;
 
 @implementation EYRequest (Accessory)
@@ -20,8 +19,6 @@
           [obj requestStart:self];
       }
     }];
-
-    UpLogInfo(@"%@", self.description);
 }
 - (void)toggleAccessoriesCancle
 {
@@ -33,7 +30,6 @@
           [obj requestCancle:self];
       }
     }];
-    UpLogInfo(@"%@", self.description);
 }
 - (void)toggleAccessoriesSuspend
 {
@@ -45,7 +41,6 @@
           [obj requestSuspend:self];
       }
     }];
-    UpLogInfo(@"%@", self.description);
 }
 - (void)toggleAccessoriesResume
 {
@@ -57,7 +52,6 @@
           [obj requestResume:self];
       }
     }];
-    UpLogInfo(@"%@", self.description);
 }
 - (void)toggleAccessoriesFinished
 {
@@ -69,7 +63,6 @@
           [obj requestFinished:self];
       }
     }];
-    UpLogInfo(@"%@", self.description);
 }
 - (void)toggleAccessoriesFailed
 {
@@ -81,6 +74,5 @@
           [obj requestFailed:self];
       }
     }];
-    UpLogInfo(@"%@", self.description);
 }
 @end
