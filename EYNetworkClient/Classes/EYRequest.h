@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "EYNetwork.h"
+NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, EYRequestMethod) {
     EYRequestMethodGET,
     EYRequestMethodPOST,
@@ -88,3 +89,4 @@ typedef void (^ConstructingBodyBlock)(id<AFMultipartFormData> formData);
 - (void)addAccessory:(id<EYRequestDelegate>)accessory;
 - (void)removeAccessory:(id<EYRequestDelegate>)accessory;
 @end
+NS_ASSUME_NONNULL_END
