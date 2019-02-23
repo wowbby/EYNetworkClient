@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <EYNetwork/EYNetwork.h>
+#import "EYNetwork.h"
 typedef NS_ENUM(NSInteger, EYRequestMethod) {
     EYRequestMethodGET,
     EYRequestMethodPOST,
@@ -31,6 +31,17 @@ typedef NS_ENUM(NSInteger, EYRequestPriority) {
 
 };
 
+@class EYRequest;
+@protocol EYRequestDelegate <NSObject>
+- (void)requestStart:(id)request;
+- (void)requestCancle:(id)request;
+- (void)requestSuspend:(id)request;
+- (void)requestResume:(id)request;
+- (void)requestFinished:(id)request;
+- (void)requestFailed:(id)request;
+@end
+
+
 typedef void (^ConstructingBodyBlock)(id<AFMultipartFormData> formData);
 
 @interface EYRequest : NSObject
@@ -46,7 +57,7 @@ typedef void (^ConstructingBodyBlock)(id<AFMultipartFormData> formData);
 @property (nonatomic, strong, readonly, nullable) NSDictionary *reponseHeaders;
 @property (nonatomic, strong, readonly, nullable) id responseObject;
 @property (nonatomic, strong, readonly, nullable) NSError *error;
-
+@property (strong, nonatomic, readonly, nullable) NSHashTable<id<EYRequestDelegate>> *accessories;
 /**
  EYRequest configInfo
  */
@@ -73,4 +84,7 @@ typedef void (^ConstructingBodyBlock)(id<AFMultipartFormData> formData);
 - (void)cancle;
 - (void)suspend;
 - (void)resume;
+
+- (void)addAccessory:(id<EYRequestDelegate>)accessory;
+- (void)removeAccessory:(id<EYRequestDelegate>)accessory;
 @end

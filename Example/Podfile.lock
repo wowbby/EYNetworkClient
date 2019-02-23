@@ -14,19 +14,28 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - CocoaLumberjack (3.5.1):
+    - CocoaLumberjack/Core (= 3.5.1)
+  - CocoaLumberjack/Core (3.5.1)
   - EYNetwork (0.1.6):
     - AFNetworking
     - ReactiveObjC
-  - EYNetworkClient (0.3.0):
+  - EYNetworkClient (0.5.0):
     - EYNetwork
+    - UpLog
   - ReactiveObjC (3.1.0)
+  - UpLog (0.1.0):
+    - CocoaLumberjack
 
 DEPENDENCIES:
   - EYNetworkClient (from `../`)
 
 SPEC REPOS:
+  https://gitee.com/wowbby/repo.git:
+    - UpLog
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - CocoaLumberjack
     - EYNetwork
     - ReactiveObjC
 
@@ -36,10 +45,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  CocoaLumberjack: 2101f8a5508197a305e737d16c5c2e9e2157628c
   EYNetwork: 61665cea93fff0c109786a8fb0bdba2c59cdbd77
-  EYNetworkClient: fab856e6bdc361eb710117c6ab8706eb6164c2af
+  EYNetworkClient: 41cc4a747681f592e03a1ab4ede82f186d85a9d9
   ReactiveObjC: 2a38ea15335de4119d8b17caf1db1484f61db902
+  UpLog: c3256727e4d94293ffaf818501fb3bce218fd8b6
 
-PODFILE CHECKSUM: 062d59395274596df301bcb53607b6f3f0d36e8d
+PODFILE CHECKSUM: 0b68a09792ed12098b0b2c13d055aacf9367f11e
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0

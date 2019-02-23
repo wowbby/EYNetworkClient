@@ -13,6 +13,7 @@
 #import "NSString+Hash.h"
 #import "EYRequestCache.h"
 #import "EYRequestSampleCache.h"
+#import "EYRequest+Accessory.h"
 @interface EYRequest ()
 @property (nonatomic, strong, readwrite, nonnull) NSURLSessionTask *task;
 @property (nonatomic, strong, readwrite, nonnull) NSURLRequest *currentRequest;
@@ -23,6 +24,7 @@
 @property (nonatomic, strong, readwrite, nullable) id responseObject;
 @property (nonatomic, strong, readwrite, nullable) NSError *error;
 @property (nonatomic, strong, nonnull) id<EYRequestCache> cache;
+@property (strong, nonatomic, nullable) NSHashTable<id<EYRequestDelegate>> *accessories;
 @end
 
 @implementation EYRequest
@@ -31,6 +33,7 @@
     if (self = [super init]) {
 
         self.cache = [[EYRequestSampleCache alloc] initWithCacheKey:self.cacheKey cacheTimeInSeconds:self.cacheTimeInSeconds responseSerializerType:self.responseSerializerType];
+        self.accessories = [NSHashTable weakObjectsHashTable];
     }
     return self;
 }
@@ -53,9 +56,11 @@
           id cacheObject = [self.cache loadCachdata];
           if (cacheObject) {
               [(EYRACSubscriber *)subscriber sendStart:nil];
+              [self toggleAccessoriesStart];
               self.responseObject = cacheObject;
               [subscriber sendNext:self];
               [subscriber sendCompleted];
+              [self toggleAccessoriesFinished];
               return [RACDisposable disposableWithBlock:^{
               }];
           }
@@ -72,6 +77,7 @@
     return [[[EYNetwokAgent shareAgent] addRequest:self] subscribeStart:^(NSURLSessionTask *task) {
       self.task = task;
       [(EYRACSubscriber *)subscriber sendStart:task];
+      [self toggleAccessoriesStart];
     }
         Next:^(id _Nullable x) {
 
@@ -83,6 +89,7 @@
           }
           [subscriber sendNext:self];
           [subscriber sendCompleted];
+          [self toggleAccessoriesFinished];
         }
         progress:^(NSProgress *progress) {
           [(EYRACSubscriber *)subscriber sendProgress:progress];
@@ -90,6 +97,7 @@
         error:^(NSError *_Nullable error) {
           [subscriber sendError:error];
           [subscriber sendCompleted];
+          [self toggleAccessoriesFailed];
         }
         completed:^{
           [subscriber sendCompleted];
@@ -99,6 +107,7 @@
 {
     if (self.task && (self.task.state == NSURLSessionTaskStateRunning || self.task.state == NSURLSessionTaskStateSuspended)) {
         [self.task cancel];
+        [self toggleAccessoriesCancle];
     }
 }
 - (void)suspend
@@ -106,12 +115,14 @@
 
     if (self.task && self.task.state == NSURLSessionTaskStateRunning) {
         [self.task suspend];
+        [self toggleAccessoriesSuspend];
     }
 }
 - (void)resume
 {
     if (self.task && self.task.state != NSURLSessionTaskStateRunning) {
         [self.task resume];
+        [self toggleAccessoriesResume];
     }
 }
 - (NSTimeInterval)timeoutInterval
@@ -180,7 +191,7 @@
 - (NSString *)description
 {
 
-    return [NSString stringWithFormat:@"EYRequest:\n name :{%@},\n baseURL:{%@},\n path:{%@},\n body:{%@},\n header:{%@},\n method:{%ld}", self.name, self.baseURL, self.path, self.requestArgument, self.requestHeaders, (long)self.method];
+    return [NSString stringWithFormat:@"EYRequest:\n name :{%@},\n baseURL:{%@},\n path:{%@},\n body:{%@},\n header:{%@},\n method:{%ld},\n response:{%@},\n error:{%@}", self.name, self.baseURL, self.path, self.requestArgument, self.requestHeaders, (long)self.method, self.responseObject, self.error];
 }
 - (void)saveResponseobject:(id)responseObject
 {
@@ -189,6 +200,24 @@
     NSData *dataJson = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&error];
     if (error) {
         [self.cache saveResponseDataToCacheFile:dataJson];
+    }
+}
+- (void)addAccessory:(id<EYRequestDelegate>)accessory
+{
+    if (!accessory || [accessory conformsToProtocol:@protocol(EYRequestDelegate)]) {
+        return;
+    }
+    if (![self.accessories containsObject:accessory]) {
+        [self.accessories addObject:accessory];
+    }
+}
+- (void)removeAccessory:(id<EYRequestDelegate>)accessory
+{
+    if (!accessory || [accessory conformsToProtocol:@protocol(EYRequestDelegate)]) {
+        return;
+    }
+    if ([self.accessories containsObject:accessory]) {
+        [self.accessories removeObject:accessory];
     }
 }
 @end

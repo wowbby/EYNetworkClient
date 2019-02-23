@@ -1,5 +1,6 @@
-use_frameworks!
-
+#use_frameworks!
+source 'https://gitee.com/wowbby/repo.git'
+source 'https://github.com/CocoaPods/Specs.git'
 target 'EYNetworkClient_Example' do
   pod 'EYNetworkClient', :path => '../'
 
